@@ -58,7 +58,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showDialog(){
-        AlertDialog dialog = new AlertDialog.Builder(this).create();
+        AlertDialog dialog = new AlertDialog.Builder(this,R.style.AppCompatAlertDialogStyle)
+                .create();
         dialog.setTitle(R.string.enter_url);
 
         View dialogView = getLayoutInflater().inflate(R.layout.alert_dialog, null);

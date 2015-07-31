@@ -7,6 +7,8 @@ import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.xavigil.uniquewords.BuildConfig;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -53,7 +55,8 @@ public class ReadFileTask extends AsyncTask<String, ReadFileTask.ProgressWrapper
         String resource = params[0];
         if(resource == null) return null;
 
-        Log.d(TAG, "resource = " + resource);
+        if(BuildConfig.DEBUG)
+            Log.d(TAG, "resource = " + resource);
 
         InputStream input = null;
         HttpURLConnection connection = null;
@@ -68,8 +71,10 @@ public class ReadFileTask extends AsyncTask<String, ReadFileTask.ProgressWrapper
                 connection.connect();
 
                 if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                    Log.e(TAG, "Server response code " + connection.getResponseCode()
-                            + " | " + connection.getResponseMessage());
+                    if(BuildConfig.DEBUG) {
+                        Log.e(TAG, "Server response code " + connection.getResponseCode()
+                                + " | " + connection.getResponseMessage());
+                    }
                     return "There was a problem with the url. Please try again.";
                 }
                 fileLength = connection.getContentLength();

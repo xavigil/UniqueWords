@@ -14,7 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="TEXT FILE"
+        android:text="LOCAL TEXT FILE"
+        style="@android:style/TextAppearance.Medium"
         android:onClick="onFileClick"
         />
 
@@ -23,6 +24,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:text="URL"
+        style="@android:style/TextAppearance.Medium"
         android:onClick="onUrlClick"
         />
 
