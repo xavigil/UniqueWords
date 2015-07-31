@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">UniqueWords</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">Ok</string>
+
+    <string name="enter_url">Please enter the url:</string>
+
+    <string name="no_activity">No application found to pick a file. Please run this application on another device.</string>
+    <string name="title_activity_list">Unique words</string>
+    <string name="action_settings">Settings</string>
+
+</resources>
