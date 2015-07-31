@@ -1,4 +1,4 @@
-package com.xavigil.uniquewords;
+package com.xavigil.uniquewords.view;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,11 +8,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ProgressBar;
 
+import com.xavigil.uniquewords.R;
+import com.xavigil.uniquewords.asynctask.ReadFileTask;
 import com.xavigil.uniquewords.adapter.ListAdapter;
-import com.xavigil.uniquewords.model.UniqueWord;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class ListActivity extends AppCompatActivity {

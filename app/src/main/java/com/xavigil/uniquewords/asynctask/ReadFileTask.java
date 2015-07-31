@@ -1,4 +1,4 @@
-package com.xavigil.uniquewords;
+package com.xavigil.uniquewords.asynctask;
 
 import android.content.Context;
 import android.net.Uri;

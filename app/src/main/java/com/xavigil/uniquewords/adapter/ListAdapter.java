@@ -6,17 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.xavigil.uniquewords.IReadFileTask;
+import com.xavigil.uniquewords.asynctask.IReadFileTask;
 import com.xavigil.uniquewords.R;
 import com.xavigil.uniquewords.model.UniqueWord;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.TreeSet;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>
         implements IReadFileTask{
@@ -70,7 +65,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>
     {
         UniqueWord uw = mHashMap.get(word);
         if(uw == null){
-            mHashMap.put(word,new UniqueWord(word,1));
+            mHashMap.put(word, new UniqueWord(word, 1));
             mLinkedList.addLast(word);
         }
         else{

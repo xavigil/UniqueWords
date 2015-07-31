@@ -1,4 +1,4 @@
-package com.xavigil.uniquewords;
+package com.xavigil.uniquewords.view;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -7,13 +7,12 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatEditText;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import java.io.File;
+import com.xavigil.uniquewords.R;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -47,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
         if(requestCode == PICK_FILE){
             if(resultCode == RESULT_OK){
                 Uri uri = data.getData();
-//                File file = new File(uri.getPath());
                 startListActivity(uri.toString());
             }
         }
