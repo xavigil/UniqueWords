@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,7 +21,7 @@ import java.util.regex.Pattern;
  * Reads a local or remote text file and passes the words to a @link{IReadFileTask} listener
  * during the process.
  */
-public class ReadFileTask extends AsyncTask<String, ReadFileTask.ProgressWrapper, Void> {
+public class ReadFileTask extends AsyncTask<String, ReadFileTask.ProgressWrapper, String> {
 
     private static final String TAG = "ReadFileTask";
 
@@ -48,7 +49,7 @@ public class ReadFileTask extends AsyncTask<String, ReadFileTask.ProgressWrapper
     }
 
     @Override
-    protected Void doInBackground(String... params) {
+    protected String doInBackground(String... params) {
         String resource = params[0];
         if(resource == null) return null;
 
@@ -69,7 +70,7 @@ public class ReadFileTask extends AsyncTask<String, ReadFileTask.ProgressWrapper
                 if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
                     Log.e(TAG, "Server response code " + connection.getResponseCode()
                             + " | " + connection.getResponseMessage());
-                    return null;
+                    return "There was a problem with the url. Please try again.";
                 }
                 fileLength = connection.getContentLength();
                 input = connection.getInputStream();
@@ -132,10 +133,9 @@ public class ReadFileTask extends AsyncTask<String, ReadFileTask.ProgressWrapper
             mListener.onNextWord(values[0].word);
     }
 
-
     @Override
-    protected void onCancelled() {
-        super.onCancelled();
+    protected void onPostExecute(String message) {
+        if (message != null)
+            Toast.makeText(mCtx, message, Toast.LENGTH_LONG).show();
     }
-
 }
