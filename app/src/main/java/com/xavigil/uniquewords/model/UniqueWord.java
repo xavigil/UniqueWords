@@ -5,14 +5,14 @@ import java.util.Comparator;
 public class UniqueWord {
 
     public String word;
-    public int appearances;
+    public int count;
 
-    public UniqueWord(String word, int appearances){
+    public UniqueWord(String word, int count){
         this.word = word;
-        this.appearances = appearances;
+        this.count = count;
     }
 
-    static Comparator<UniqueWord> getWordComparator() {
+    public static Comparator<UniqueWord> getWordComparator() {
         return new Comparator<UniqueWord>() {
             @Override
             public int compare(UniqueWord uw1, UniqueWord uw2) {
@@ -21,11 +21,11 @@ public class UniqueWord {
         };
     }
 
-    static Comparator<UniqueWord> getAppearancesComparator() {
+    public static Comparator<UniqueWord> getCountComparator() {
         return new Comparator<UniqueWord>() {
             @Override
             public int compare(UniqueWord uw1, UniqueWord uw2) {
-                return uw2.appearances - uw1.appearances;
+                return uw2.count - uw1.count;
             }
         };
     }

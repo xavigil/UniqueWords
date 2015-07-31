@@ -100,6 +100,8 @@ public class ReadFileTask extends AsyncTask<String, ReadFileTask.ProgressWrapper
                     break;
                 }
             }
+            publishProgress(new ProgressWrapper(100, null));
+
             br.close();
 
         } catch (Exception e) {
@@ -126,7 +128,8 @@ public class ReadFileTask extends AsyncTask<String, ReadFileTask.ProgressWrapper
         super.onProgressUpdate(values);
         if(mProgressBar != null)
             mProgressBar.setProgress(values[0].progress);
-        mListener.onNextWord(values[0].word);
+        if(values[0].word != null)
+            mListener.onNextWord(values[0].word);
     }
 
 

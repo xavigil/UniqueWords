@@ -59,7 +59,7 @@ public class ListActivity extends AppCompatActivity {
             return true;
         }
         else if(id == R.id.action_count){
-            mAdapter.setSortOrder(ListAdapter.SortOrder.APPEARANCES);
+            mAdapter.setSortOrder(ListAdapter.SortOrder.COUNT);
             return true;
         }
         return super.onOptionsItemSelected(item);

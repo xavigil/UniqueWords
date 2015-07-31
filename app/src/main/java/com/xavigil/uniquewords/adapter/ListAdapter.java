@@ -11,8 +11,10 @@ import com.xavigil.uniquewords.R;
 import com.xavigil.uniquewords.model.UniqueWord;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.List;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>
         implements IReadFileTask{
@@ -20,19 +22,23 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>
     public enum SortOrder{
         DEFAULT,
         ALPHABETICALLY,
-        APPEARANCES
+        COUNT
     }
 
     private SortOrder mSortOrder;
 
     private HashMap<String, UniqueWord> mHashMap;
-    private ArrayList<String> mArrayList; // SortOrderDefault
+    private List<String> mArrayList;                    // SortOrder.DEFAULT
+    private List<UniqueWord> mAlphabeticallySortedList; // SortOrder.ALPHABETICALLY
+    private List<UniqueWord> mCountSortedList;          // SortOrder.COUNT
 
     public ListAdapter(){
 
         mSortOrder = SortOrder.DEFAULT;
         mHashMap = new HashMap<>();
         mArrayList = new ArrayList<>();
+        mAlphabeticallySortedList = null;
+        mCountSortedList = null;
 
     }
 
@@ -45,8 +51,18 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String word = mArrayList.get(position);
-        holder.bindUniqueWord(mHashMap.get(word));
+        UniqueWord uw;
+        if(mSortOrder == SortOrder.ALPHABETICALLY){
+            uw = mAlphabeticallySortedList.get(position);
+        }
+        else if(mSortOrder == SortOrder.COUNT){
+            uw = mCountSortedList.get(position);
+        }
+        else {
+            String word = mArrayList.get(position);
+            uw = mHashMap.get(word);
+        }
+        holder.bindUniqueWord(uw);
     }
 
     @Override
@@ -66,7 +82,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>
 
         public void bindUniqueWord(UniqueWord uniqueWord){
             mWord.setText(uniqueWord.word);
-            mCount.setText(String.valueOf(uniqueWord.appearances));
+            mCount.setText(String.valueOf(uniqueWord.count));
         }
     }
 
@@ -74,8 +90,29 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>
         int ordinal = sortOrder.ordinal();
         if(ordinal<0 || ordinal>SortOrder.values().length) return;
         if(ordinal == mSortOrder.ordinal()) return;
-        mSortOrder = sortOrder;
+        updateSortOrder(sortOrder);
+    }
+
+    private void updateSortOrder(SortOrder newOrder){
+        mSortOrder = newOrder;
+        if(mSortOrder == SortOrder.ALPHABETICALLY && mAlphabeticallySortedList == null){
+            mAlphabeticallySortedList = sortCollection(mHashMap.values(),newOrder);
+        }
+        else if(mSortOrder == SortOrder.COUNT && mCountSortedList == null){
+            mCountSortedList = sortCollection(mHashMap.values(),newOrder);
+        }
         notifyDataSetChanged();
+    }
+
+    private List<UniqueWord> sortCollection(Collection<UniqueWord> c, SortOrder order){
+        List<UniqueWord> list = new ArrayList<>(c);
+        if(order == SortOrder.ALPHABETICALLY){
+            Collections.sort(list, UniqueWord.getWordComparator());
+        }
+        else if(order == SortOrder.COUNT){
+            Collections.sort(list, UniqueWord.getCountComparator());
+        }
+        return list;
     }
 
     private void addWord(String word)
@@ -86,7 +123,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>
             mArrayList.add(word);
         }
         else{
-            uw.appearances++;
+            uw.count++;
             mHashMap.put(word,uw);
         }
         notifyDataSetChanged();
